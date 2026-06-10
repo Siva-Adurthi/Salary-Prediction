@@ -1,0 +1,230 @@
+<html>
+    <head>
+        <title>Salary Prediction</title>
+        <style>
+            .container1{
+                border: solid 2px rgb(20, 182, 236);
+                width: 500px;
+                height:510px;
+                padding:10px;
+                margin-top:7%;
+                margin-left:33%;
+                border-radius: 20px;
+                animation:glow 3s infinite ease-in-out;
+            }
+            @keyframes glow{
+                0%{box-shadow : 0 0 10px lightblue;}
+                50%{box-shadow : 0 0 100px lightblue;}
+                100%{box-shadow : 0 0 10px lightblue;}
+            }
+            .heading{
+                color:rgb(27, 171, 248);
+                margin-left:155px;
+                font-family: arial;
+            }
+            #select{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:70px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #ey{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:20px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+
+            }
+            #el{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:24px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #sc{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:56px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #in{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:75px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #cs{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:35px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #lo{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:73px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #rw{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:40px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #cc{
+                border:solid 2px rgb(27, 171, 248);
+                margin-left:43px;
+                border-radius:5px;
+                width:300px;
+                height:25px;
+            }
+            #salary{
+                display:inline-block;
+                margin-left:95px;
+            }
+            #salary1{
+                display:inline-block
+            }
+            .button{
+                margin-left:195px;
+                width:100px;
+                height:30px;
+                border-radius: 15px;
+                border-color:rgb(27, 171, 248);
+                background-color: white;
+                cursor: pointer;
+            }
+            .button:hover{
+                background-color: rgb(27, 171, 248);
+                color:white;
+                box-shadow:1px 1px 10px black;
+                transition:box-shadow 0.5s,background-color 0.8s;
+            }
+        </style>
+        <script>
+            function selection()
+            {
+                let job=document.getElementById("select").value;
+                let ey=document.getElementById("ey").value;
+                let el=document.getElementById("el").value;
+                let sc=document.getElementById("sc").value;
+                let indus=document.getElementById("in").value;
+                let cs=document.getElementById("cs").value;
+                let lo=document.getElementById("lo").value;
+                let rw=document.getElementById("rw").value;
+                let cc=document.getElementById("cc").value;
+                fetch('/predict',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        job_title:job,        
+                        experience_years:ey,
+                        education_level:el,
+                        skills_count:sc, 
+                        industry:indus,   
+                        company_size:cs,  
+                        location:lo,    
+                        remote_work:rw,        
+                        certifications:cc     
+                    })
+                })
+                .then(response=> response.text())
+                .then(data=>{
+                    document.getElementById("salary").innerHTML="₹ "+data;
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container1">
+            <h3 class="heading">SALARY PREDICTION</h3>
+            <label>Job title &nbsp;</label>
+            <select id="select" required>
+                <option value="">select your Job Title</option>
+                <option>Backend Developer</option>
+                <option>Cybersecurity Analyst</option>
+                <option>Product Manager</option>
+                <option>AI Engineer</option>
+                <option>Data Scientist</option>
+                <option>DevOps Engineer</option>
+                <option>Software Engineer</option>
+                <option>Data Analyst</option>
+                <option>Cloud Engineer</option>
+                <option>Machine Learning Engineer</option>
+                <option>Business Analyst</option>
+                <option>Frontend Developer</option>
+            </select><br><br>
+            <label>Experience years</label>
+            <input type="number" placeholder="Enter Experience years" id="ey" requried><br><br>
+            <label>Education Level</label>
+            <select id="el" required>
+                <option value="">select your Education Level</option>
+                <option>Master</option>
+                <option>High School</option>
+                <option>Bachelor</option>
+                <option>PhD</option>
+                <option>Diploma</option>
+            </select><br><br>
+            <label>Skill Count</label>
+            <input type="number" placeholder="Your Skills Count" id="sc" required><br><br>
+            <label>Industry</label>
+            <select id="in" required>
+                <option value="">select Industry</option>
+                <option>Finance</option>
+                <option>Consulting</option>
+                <option>Media</option>
+                <option>Manufacturing</option>
+                <option>Technology</option>
+                <option>Government</option>
+                <option>Healthcare</option>
+                <option>Education</option>
+                <option>Telecom</option>
+                <option>Retail</option>
+            </select><br><br>
+            <label>Company Size</label>
+            <select id="cs" required>
+                <option value="">select Company Size</option>
+                <option>Large</option>
+                <option>Small</option>
+                <option>Medium</option>
+                <option>Enterprise</option>
+                <option>Startup</option>
+            </select><br><br>
+            <label>Location</label>
+            <select id="lo" required>
+                <option value="">select Location</option>
+                <option>Australia</option>
+                <option>Canada</option>
+                <option>sweden</option>
+                <option>Remote</option>
+                <option>Singapore</option>
+                <option>USA</option>
+                <option>India</option>
+                <option>Netherlands</option>
+                <option>Germany</option>
+            </select><br><br>
+            <label>Remote Work</label>
+            <select id="rw" required>
+                <option value="">select Remote Work Option</option>
+                <option>No</option>
+                <option>Hybrid</option>
+                <option>Yes</option>
+            </select><br><br>
+            <label>Certifications</label>
+            <input type="number" placeholder="Your Certifications Count" id="cc" required><br>
+            <p id="salary1">Salary</p><p id="salary"></p><br>
+            <button class="button" onclick="selection()">Predict</button>
+            
+        </div>
+    </body>
+</html>
